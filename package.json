@@ -25,6 +25,7 @@
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
     "fake-indexeddb": "^6.2.5",
+    "fast-check": "^4.4.0",
     "jsdom": "^27.3.0",
     "prettier": "^3.7.4",
     "svelte": "^5.43.8",

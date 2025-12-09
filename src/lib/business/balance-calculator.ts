@@ -73,7 +73,10 @@ export class BalanceCalculator {
         .reduce((sum, pago) => sum + pago.monto, 0);
 
       const valorCuota = credito.total_a_pagar / credito.numero_cuotas;
-      return Math.floor(totalPagado / valorCuota);
+      const cuotasEstimadas = Math.floor(totalPagado / valorCuota);
+      
+      // Never exceed total number of cuotas
+      return Math.min(cuotasEstimadas, credito.numero_cuotas);
     }
 
     // Count cuotas marked as 'pagada'
