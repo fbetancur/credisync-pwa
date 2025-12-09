@@ -1,4 +1,4 @@
-# PWA Microcréditos - Offline First
+# CrediSyncApp - Offline First PWA
 
 Progressive Web App para gestión de microcréditos y cobranza en campo, con capacidad offline completa.
 
