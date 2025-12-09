@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Test Suite - CrediSyncApp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .test-header {
+            background: #f3f4f6;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-body {
+            padding: 20px;
+        }
+        
+        .test-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s;
+        }
+        
+        .test-item.pending {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .test-item.success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        
+        .test-item.error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .test-item.info {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .test-label {
+            flex: 1;
+        }
+        
+        .test-status {
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .status-pending {
+            background: #fbbf24;
+            color: #78350f;
+        }
+        
+        .status-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .status-error {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .status-info {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .test-details {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e3a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .summary h2 {
+            margin-bottom: 15px;
+        }
+        
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 PWA Test Suite</h1>
+            <p>Pruebas Automáticas de CrediSyncApp</p>
+        </div>
+        
+        <div class="content">
+            <!-- Test 1: Service Worker -->
+            <div class="test-section">
+                <div class="test-header">
+                    🔧 Service Worker
+                </div>
+                <div class="test-body">
+                    <div id="test-sw-support" class="test-item pending">
+                        <div class="test-label">Soporte de Service Worker</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-sw-registered" class="test-item pending">
+                        <div class="test-label">Service Worker Registrado</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-sw-active" class="test-item pending">
+                        <div class="test-label">Service Worker Activo</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test 2: Manifest -->
+            <div class="test-section">
+                <div class="test-header">
+                    📱 PWA Manifest
+                </div>
+                <div class="test-body">
+                    <div id="test-manifest-link" class="test-item pending">
+                        <div class="test-label">Link al Manifest en HTML</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-manifest-fetch" class="test-item pending">
+                        <div class="test-label">Manifest Accesible</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-manifest-valid" class="test-item pending">
+                        <div class="test-label">Manifest Válido</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-installable" class="test-item pending">
+                        <div class="test-label">PWA Instalable</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test 3: Cache Storage -->
+            <div class="test-section">
+                <div class="test-header">
+                    💾 Cache Storage
+                </div>
+                <div class="test-body">
+                    <div id="test-cache-support" class="test-item pending">
+                        <div class="test-label">Soporte de Cache API</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-cache-precache" class="test-item pending">
+                        <div class="test-label">Precache de Workbox</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-cache-supabase" class="test-item pending">
+                        <div class="test-label">Cache de Supabase API</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-cache-images" class="test-item pending">
+                        <div class="test-label">Cache de Imágenes</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-cache-static" class="test-item pending">
+                        <div class="test-label">Cache de Recursos Estáticos</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test 4: IndexedDB -->
+            <div class="test-section">
+                <div class="test-header">
+                    🗄️ IndexedDB
+                </div>
+                <div class="test-body">
+                    <div id="test-idb-support" class="test-item pending">
+                        <div class="test-label">Soporte de IndexedDB</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-idb-open" class="test-item pending">
+                        <div class="test-label">Base de Datos Abierta</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test 5: Offline Capability -->
+            <div class="test-section">
+                <div class="test-header">
+                    📡 Capacidad Offline
+                </div>
+                <div class="test-body">
+                    <div id="test-offline-ready" class="test-item pending">
+                        <div class="test-label">App Lista para Offline</div>
+                        <div class="test-status status-pending">Probando...</div>
+                    </div>
+                    <div id="test-offline-manual" class="test-item info">
+                        <div class="test-label">Prueba Manual: Activar modo offline en DevTools y recargar</div>
+                        <div class="test-status status-info">Manual</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="button-group">
+                <button class="btn-primary" onclick="runAllTests()">🔄 Ejecutar Todas las Pruebas</button>
+                <button class="btn-secondary" onclick="location.reload()">🔃 Reiniciar</button>
+            </div>
+            
+            <!-- Summary -->
+            <div class="summary" id="summary" style="display: none;">
+                <h2>📊 Resumen de Pruebas</h2>
+                <div class="summary-stats">
+                    <div class="stat">
+                        <div class="stat-number" id="stat-total">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="stat-passed">0</div>
+                        <div class="stat-label">Exitosas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="stat-failed">0</div>
+                        <div class="stat-label">Fallidas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="stat-percentage">0%</div>
+                        <div class="stat-label">Éxito</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0
+        };
+        
+        function updateTest(id, status, message = '') {
+            const element = document.getElementById(id);
+            const statusElement = element.querySelector('.test-status');
+            
+            element.className = `test-item ${status}`;
+            
+            if (status === 'success') {
+                statusElement.className = 'test-status status-success';
+                statusElement.textContent = '✅ Exitoso';
+                testResults.passed++;
+            } else if (status === 'error') {
+                statusElement.className = 'test-status status-error';
+                statusElement.textContent = '❌ Fallido';
+                testResults.failed++;
+            } else if (status === 'info') {
+                statusElement.className = 'test-status status-info';
+                statusElement.textContent = 'ℹ️ Info';
+            }
+            
+            if (message) {
+                let detailsDiv = element.querySelector('.test-details');
+                if (!detailsDiv) {
+                    detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'test-details';
+                    element.querySelector('.test-label').appendChild(detailsDiv);
+                }
+                detailsDiv.textContent = message;
+            }
+            
+            testResults.total++;
+        }
+        
+        function showSummary() {
+            const summary = document.getElementById('summary');
+            const percentage = testResults.total > 0 
+                ? Math.round((testResults.passed / testResults.total) * 100) 
+                : 0;
+            
+            document.getElementById('stat-total').textContent = testResults.total;
+            document.getElementById('stat-passed').textContent = testResults.passed;
+            document.getElementById('stat-failed').textContent = testResults.failed;
+            document.getElementById('stat-percentage').textContent = percentage + '%';
+            
+            summary.style.display = 'block';
+        }
+        
+        async function runAllTests() {
+            testResults = { total: 0, passed: 0, failed: 0 };
+            
+            // Test 1: Service Worker Support
+            if ('serviceWorker' in navigator) {
+                updateTest('test-sw-support', 'success', 'navigator.serviceWorker disponible');
+            } else {
+                updateTest('test-sw-support', 'error', 'Service Worker no soportado');
+            }
+            
+            // Test 2: Service Worker Registration
+            try {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration) {
+                    updateTest('test-sw-registered', 'success', `Scope: ${registration.scope}`);
+                    
+                    // Test 3: Service Worker Active
+                    if (registration.active) {
+                        updateTest('test-sw-active', 'success', `State: ${registration.active.state}`);
+                    } else {
+                        updateTest('test-sw-active', 'error', 'Service Worker no está activo');
+                    }
+                } else {
+                    updateTest('test-sw-registered', 'error', 'Service Worker no registrado');
+                    updateTest('test-sw-active', 'error', 'No hay Service Worker activo');
+                }
+            } catch (error) {
+                updateTest('test-sw-registered', 'error', error.message);
+                updateTest('test-sw-active', 'error', 'No se pudo verificar');
+            }
+            
+            // Test 4: Manifest Link
+            const manifestLink = document.querySelector('link[rel="manifest"]');
+            if (manifestLink) {
+                updateTest('test-manifest-link', 'success', `href: ${manifestLink.href}`);
+            } else {
+                updateTest('test-manifest-link', 'error', 'No se encontró link al manifest');
+            }
+            
+            // Test 5: Manifest Fetch
+            try {
+                const response = await fetch('/manifest.webmanifest');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    updateTest('test-manifest-fetch', 'success', `Status: ${response.status}`);
+                    
+                    // Test 6: Manifest Valid
+                    if (manifest.name && manifest.icons && manifest.icons.length > 0) {
+                        updateTest('test-manifest-valid', 'success', `Name: ${manifest.name}, Icons: ${manifest.icons.length}`);
+                    } else {
+                        updateTest('test-manifest-valid', 'error', 'Manifest incompleto');
+                    }
+                } else {
+                    updateTest('test-manifest-fetch', 'error', `Status: ${response.status}`);
+                    updateTest('test-manifest-valid', 'error', 'No se pudo validar');
+                }
+            } catch (error) {
+                updateTest('test-manifest-fetch', 'error', error.message);
+                updateTest('test-manifest-valid', 'error', 'No se pudo validar');
+            }
+            
+            // Test 7: Installable
+            let installPromptReceived = false;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                installPromptReceived = true;
+            });
+            
+            setTimeout(() => {
+                if (installPromptReceived) {
+                    updateTest('test-installable', 'success', 'PWA puede ser instalada');
+                } else {
+                    updateTest('test-installable', 'info', 'Ya instalada o no cumple criterios');
+                }
+            }, 1000);
+            
+            // Test 8: Cache API Support
+            if ('caches' in window) {
+                updateTest('test-cache-support', 'success', 'Cache API disponible');
+                
+                // Test 9-12: Check caches
+                try {
+                    const cacheNames = await caches.keys();
+                    
+                    const precache = cacheNames.find(name => name.includes('precache'));
+                    if (precache) {
+                        const cache = await caches.open(precache);
+                        const keys = await cache.keys();
+                        updateTest('test-cache-precache', 'success', `${keys.length} archivos en precache`);
+                    } else {
+                        updateTest('test-cache-precache', 'error', 'No se encontró precache');
+                    }
+                    
+                    const supabaseCache = cacheNames.find(name => name.includes('supabase'));
+                    if (supabaseCache) {
+                        updateTest('test-cache-supabase', 'success', `Cache: ${supabaseCache}`);
+                    } else {
+                        updateTest('test-cache-supabase', 'info', 'Cache se creará al usar Supabase');
+                    }
+                    
+                    const imagesCache = cacheNames.find(name => name.includes('images'));
+                    if (imagesCache) {
+                        updateTest('test-cache-images', 'success', `Cache: ${imagesCache}`);
+                    } else {
+                        updateTest('test-cache-images', 'info', 'Cache se creará al cargar imágenes');
+                    }
+                    
+                    const staticCache = cacheNames.find(name => name.includes('static'));
+                    if (staticCache) {
+                        updateTest('test-cache-static', 'success', `Cache: ${staticCache}`);
+                    } else {
+                        updateTest('test-cache-static', 'info', 'Cache se creará al cargar recursos');
+                    }
+                } catch (error) {
+                    updateTest('test-cache-precache', 'error', error.message);
+                    updateTest('test-cache-supabase', 'error', error.message);
+                    updateTest('test-cache-images', 'error', error.message);
+                    updateTest('test-cache-static', 'error', error.message);
+                }
+            } else {
+                updateTest('test-cache-support', 'error', 'Cache API no soportada');
+            }
+            
+            // Test 13: IndexedDB Support
+            if ('indexedDB' in window) {
+                updateTest('test-idb-support', 'success', 'IndexedDB disponible');
+                
+                // Test 14: IndexedDB Open
+                try {
+                    const request = indexedDB.open('microcreditos_db');
+                    request.onsuccess = () => {
+                        updateTest('test-idb-open', 'success', 'Base de datos abierta correctamente');
+                        request.result.close();
+                    };
+                    request.onerror = () => {
+                        updateTest('test-idb-open', 'error', 'Error al abrir base de datos');
+                    };
+                } catch (error) {
+                    updateTest('test-idb-open', 'error', error.message);
+                }
+            } else {
+                updateTest('test-idb-support', 'error', 'IndexedDB no soportado');
+                updateTest('test-idb-open', 'error', 'No se puede abrir');
+            }
+            
+            // Test 15: Offline Ready
+            if ('serviceWorker' in navigator && 'caches' in window) {
+                const registration = await navigator.serviceWorker.getRegistration();
+                const cacheNames = await caches.keys();
+                const precache = cacheNames.find(name => name.includes('precache'));
+                
+                if (registration && registration.active && precache) {
+                    updateTest('test-offline-ready', 'success', 'App lista para funcionar offline');
+                } else {
+                    updateTest('test-offline-ready', 'error', 'Faltan componentes para offline');
+                }
+            } else {
+                updateTest('test-offline-ready', 'error', 'Tecnologías offline no disponibles');
+            }
+            
+            // Show summary after all tests
+            setTimeout(() => {
+                showSummary();
+            }, 2000);
+        }
+        
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(runAllTests, 1000);
+        });
+    </script>
+</body>
+</html>
