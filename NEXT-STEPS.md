@@ -111,12 +111,19 @@ Si quieres datos de prueba (rutas, productos, clientes):
 3. Deberías ver la página principal con el estado del proyecto
 
 4. Para probar la conexión a Supabase:
-   - Abre: http://localhost:5173/test-connection.html
-   - Deberías ver "✅ Conexión exitosa a Supabase"
-   - Si ves un error, revisa:
-     - Que el schema SQL se ejecutó correctamente
-     - Que las variables de entorno en `.env.local` son correctas
-     - Que las políticas RLS están configuradas
+   - Click en "Probar Conexión Supabase"
+   - Verás un warning ⚠️ indicando que RLS está bloqueando el acceso (esto es CORRECTO)
+   - Para ver "✅ Conexión exitosa", tienes dos opciones:
+
+**Opción A (Recomendada): Login con usuario de prueba**
+   - Click en "🔐 Login" desde la página de test
+   - Ingresa las credenciales del usuario que creaste en el paso 3
+   - Después del login exitoso, verás "✅ Conexión exitosa a Supabase"
+
+**Opción B: Permitir acceso público temporal (solo para testing)**
+   - Ejecuta el script `supabase/03-fix-rls-for-testing.sql` en Supabase SQL Editor
+   - Esto permite acceso público a la tabla tenants (NO recomendado para producción)
+   - Recarga la página de test
 
 ## 📋 Checklist de Verificación
 
