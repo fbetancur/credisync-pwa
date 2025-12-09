@@ -13,10 +13,11 @@
 ## Paso 2: Ejecutar el Schema SQL
 
 1. En el dashboard de Supabase, ve a **SQL Editor**
-2. Crea una nueva query
-3. Copia y pega el contenido de `schema.sql`
+2. Crea una nueva query llamada "01-schema"
+3. Copia y pega el contenido de `01-schema-only.sql`
 4. Ejecuta la query (Run)
 5. Verifica que todas las tablas se crearon correctamente en **Table Editor**
+6. Deberías ver 8 tablas: tenants, users, rutas, productos_credito, clientes, creditos, cuotas, pagos
 
 ## Paso 3: Configurar Storage para Imágenes
 
@@ -75,28 +76,33 @@ USING (
 
 ## Paso 7: Crear Usuario de Prueba
 
-Puedes crear usuarios de prueba de dos formas:
+### Crear usuario paso a paso:
 
-### Opción A: Desde el Dashboard
-1. Ve a **Authentication** > **Users**
-2. Click en **Add user**
-3. Ingresa email y contraseña
-4. Después de crear el usuario en auth, ejecuta este SQL para vincularlo:
+1. Ve a **Authentication** > **Users** en el dashboard de Supabase
+2. Click en **Add user** > **Create new user**
+3. Ingresa:
+   - **Email**: cobrador@demo.com
+   - **Password**: Demo123456!
+   - **Auto Confirm User**: ✅ (activado)
+4. Click en **Create user**
+5. Copia el UUID del usuario que aparece en la lista
+
+6. Ve a **SQL Editor** y ejecuta este SQL (reemplaza `YOUR_USER_UUID`):
 
 ```sql
 -- Vincular usuario con tenant y rol
-INSERT INTO users (id, tenant_id, email, nombre, rol)
+INSERT INTO users (id, tenant_id, email, nombre, rol, activo)
 VALUES (
-  'USER_UUID_FROM_AUTH',
+  'YOUR_USER_UUID',  -- Reemplaza con el UUID del paso 5
   '00000000-0000-0000-0000-000000000001',
   'cobrador@demo.com',
-  'Cobrador Demo',
-  'cobrador'
+  'Juan Cobrador',
+  'cobrador',
+  true
 );
 ```
 
-### Opción B: Desde la Aplicación
-La aplicación tendrá un flujo de registro que creará automáticamente el usuario en ambas tablas.
+7. Opcionalmente, ejecuta `02-seed-data.sql` para crear rutas, productos y clientes de prueba (recuerda reemplazar los UUIDs)
 
 ## Paso 8: Generar TypeScript Types (Opcional)
 
