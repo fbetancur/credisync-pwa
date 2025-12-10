@@ -23,7 +23,7 @@ vercel link
 Selecciona:
 - **Scope**: Tu cuenta/organización
 - **Link to existing project?**: No (primera vez) o Yes (si ya existe)
-- **Project name**: microcreditos-pwa (o el nombre que prefieras)
+- **Project name**: credisyncapp (o el nombre que prefieras)
 
 ## Paso 4: Configurar Variables de Entorno
 
@@ -54,7 +54,7 @@ vercel
 ```
 
 Esto creará un deployment de preview. Vercel te dará una URL como:
-`https://microcreditos-pwa-xxx.vercel.app`
+`https://credisyncapp-xxx.vercel.app`
 
 ## Paso 6: Deploy a Production
 

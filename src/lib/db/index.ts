@@ -350,6 +350,7 @@ export class MicrocreditosDB extends Dexie {
       audit_log: `
         ++id,
         timestamp,
+        sequence,
         event_type,
         aggregate_type,
         aggregate_id,

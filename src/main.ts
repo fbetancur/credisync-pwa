@@ -2,6 +2,16 @@ import { mount } from 'svelte'
 import './app.css'
 import App from './App.svelte'
 import { db } from './lib/db'
+import { errorLogger } from './lib/monitoring/error-logger'
+
+// Initialize Error Logger / Sentry
+errorLogger.initialize({
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  environment: import.meta.env.MODE,
+  release: import.meta.env.VITE_APP_VERSION || '1.0.0',
+  tracesSampleRate: import.meta.env.PROD ? 0.1 : 1.0,
+  enableLocalLogs: true,
+})
 
 // Register Service Worker (solo en producción)
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
